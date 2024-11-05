@@ -26,6 +26,7 @@ import 'People_Based_on_Age_Groups.dart';
 import 'People_Based_on_Age_Groups_Legally.dart';
 import 'Aids.dart';
 import 'Jobs.dart';
+import 'ShareDBUI.dart';
 import 'family_member_form.dart';
 import 'family_list.dart';
 import 'family_profile.dart';
@@ -73,6 +74,7 @@ class VillageOfficerApp extends StatelessWidget {
         '/AgeLegally': (context) => PeopleBasedOnAgeGroupsLegally(),
         '/Aids': (context) => AidsScreen(),
         '/Jobs': (context) => JobsScreen(),
+        '/ShareDB': (context) => DatabaseTransferScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.green,

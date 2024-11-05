@@ -100,6 +100,9 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 case 'People Based on Age Groups (Legally)':
                   Navigator.pushNamed(context, '/AgeLegally');
                   break;
+
+                case 'Share Database':
+                  Navigator.pushNamed(context, '/ShareDB');
               }
             },
             itemBuilder: (BuildContext context) {
@@ -112,7 +115,8 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 'People Based on Religion',
                 'People Based on Ethnicity',
                 'People Based on Age Groups',
-                'People Based on Age Groups (Legally)'
+                'People Based on Age Groups (Legally)',
+                'Share Database',
               }.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
