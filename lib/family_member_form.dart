@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'database_helper.dart';
 import 'family_member.dart';
+import 'package:intl/intl.dart';
 
 class FamilyMemberForm extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
   List<FamilyMember> familyMembers = [];
   String familyHouseholdNumber = '';
   String? selectedFamilyHeadType;
+  String? selectedJobType;
 
   // Define these variables for tracking the initial state
   DateTime defaultBirthday = DateTime(2000, 1, 1); // Default date for birthday
@@ -51,7 +53,8 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
             // Default for family head
             relationshipToHead: '',
             householdNumber: '',
-            grade: 'None'),
+            grade: 'None',
+            dateOfModified: ''),
       );
     });
   }
@@ -103,6 +106,11 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
 
                 case 'Share Database':
                   Navigator.pushNamed(context, '/ShareDB');
+                  break;
+
+                case 'Import Database':
+                  Navigator.pushNamed(context, '/ImportDB');
+                  break;
               }
             },
             itemBuilder: (BuildContext context) {
@@ -117,6 +125,7 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 'People Based on Age Groups',
                 'People Based on Age Groups (Legally)',
                 'Share Database',
+                'Import Database',
               }.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
@@ -174,6 +183,12 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 _buildFamilyMemberForm(i),
               const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  minimumSize: const Size.fromHeight(50),
+                ),
                 onPressed: () async {
                   setState(() {
                     isSubmitPressed =
@@ -188,7 +203,9 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                     if (!isHouseholdUnique) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content: Text('Household number already exists')),
+                          content: Text('Household number already exists'),
+                          backgroundColor: Colors.red,
+                        ),
                       );
                       return; // Stop execution if household number is not unique
                     }
@@ -207,8 +224,10 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                     if (!allNationalIdsUnique) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                            content:
-                                Text('One or more National IDs already exist')),
+                          content:
+                              Text('One or more National IDs already exist'),
+                          backgroundColor: Colors.red,
+                        ),
                       );
                       return; // Stop execution if any national ID is not unique
                     }
@@ -219,7 +238,10 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                       await DatabaseHelper().insertFamilyMember(member);
                     }
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Family Members Saved')),
+                      const SnackBar(
+                        content: Text('Family Members Saved'),
+                        backgroundColor: Colors.green,
+                      ),
                     );
 
                     // Clear the form
@@ -234,7 +256,14 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                         arguments: familyHouseholdNumber);
                   }
                 },
-                child: const Text('Save Family Data'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.save, size: 24), // Add a save icon
+                    SizedBox(width: 8), // Space between icon and text
+                    Text('Save'),
+                  ],
+                ),
               ),
             ],
           ),

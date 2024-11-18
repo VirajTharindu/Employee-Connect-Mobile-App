@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -51,7 +53,8 @@ class DatabaseHelper {
             householdNumber TEXT,
             familyHeadType TEXT,
             relationshipToHead TEXT,
-            grade TEXT
+            grade TEXT,
+            dateOfModified TEXT DEFAULT (datetime('now', 'localtime'))
           )
           ''',
         );
@@ -96,6 +99,138 @@ class DatabaseHelper {
     return List.generate(maps.length, (index) {
       return FamilyMember.fromMap(maps[index]);
     });
+  }
+
+  Future<void> deleteFamilyByHousehold(String householdNumber) async {
+    final db = await database;
+    await db.delete(
+      'family_members', // Use the name of your table here
+      where: 'householdNumber = ?',
+      whereArgs: [householdNumber],
+    );
+  }
+
+  Future<void> deleteFamilyMemberByNationalID(String nationalId) async {
+    final db = await database;
+    await db.delete(
+      'family_members',
+      where: 'nationalId = ?',
+      whereArgs: [nationalId],
+    );
+  }
+
+  Future<void> updateFamilyData(
+      String householdNumber, Map<String, dynamic> updatedData) async {
+    final db = await database;
+    await db.update(
+      'family_members', // Replace with your actual table name
+      updatedData,
+      where: 'householdNumber = ?',
+      whereArgs: [householdNumber],
+    );
+  }
+
+  // Method to update an existing family member
+  Future<int> updateFamilyMember(FamilyMember member) async {
+    final db = await database;
+
+    // Map the `FamilyMember` object to a database-compatible format
+    Map<String, dynamic> memberData = {
+      'name': member.name,
+      'nationalId': member.nationalId,
+      'birthday': member.birthday.toIso8601String(),
+      'nationality': member.nationality,
+      'religion': member.religion,
+      'educationQualification': member.educationQualification,
+      'jobType': member.jobType,
+      'familyHeadType': member.familyHeadType,
+      'relationshipToHead': member.relationshipToHead,
+      'householdNumber': member.householdNumber,
+      'grade': member.grade,
+      'dateOfModified': DateTime.now().toIso8601String(),
+      'isSamurdiAid': member.isSamurdiAid ? 1 : 0,
+      'isAswasumaAid': member.isAswasumaAid ? 1 : 0,
+      'isWedihitiAid': member.isWedihitiAid ? 1 : 0,
+      'isMahajanadaraAid': member.isMahajanadaraAid ? 1 : 0,
+      'isAbhadithaAid': member.isAbhadithaAid ? 1 : 0,
+      'isShishshyadaraAid': member.isShishshyadaraAid ? 1 : 0,
+      'isPilikadaraAid': member.isPilikadaraAid ? 1 : 0,
+      'isAnyAid': member.isAnyAid ? 1 : 0,
+      // Add other fields if necessary
+    };
+
+    // Update query: Assuming the primary key is 'id' or a combination of 'householdNumber' and 'nationalId'
+    return await db.update(
+      'family_members', // Replace with your actual table name
+      memberData,
+      where: 'id = ?',
+      whereArgs: [member.id], // Use id as the primary key
+    );
+  }
+
+// Method to update only the 'dateOfModified' field of an existing family member
+  Future<int> updateDateOfModified(FamilyMember member) async {
+    final db = await database;
+
+    // Map to update only the 'dateOfModified' field
+    Map<String, dynamic> updatedData = {
+      'dateOfModified':
+          DateTime.now().toIso8601String(), // Set current timestamp
+    };
+
+    // Update query: Assuming the primary key is 'id' or a combination of 'householdNumber' and 'nationalId'
+    return await db.update(
+      'family_members', // Replace with your actual table name
+      updatedData,
+      where: 'id = ?', // Use the primary key for updating the record
+      whereArgs: [member.id], // Use id as the primary key
+    );
+  }
+
+// Function to update 'dateOfModified' for the family
+  Future<void> updateFamilyDateOfModified(String householdNumber) async {
+    final db = await database;
+
+    // Map to update only the 'dateOfModified' field for the family
+    Map<String, dynamic> updatedData = {
+      'dateOfModified':
+          DateTime.now().toIso8601String(), // Set current timestamp
+    };
+
+    // Update query to modify the family's 'dateOfModified' based on the household number
+    await db.update(
+      'family_members', // Replace with your actual family table name
+      updatedData,
+      where: 'householdNumber = ?',
+      whereArgs: [householdNumber], // Use householdNumber to update the family
+    );
+  }
+
+// Fetch family data (assuming you have a method like this)
+  Future<Map<String, dynamic>> getFamilyMemberData(
+      String householdNumber) async {
+    try {
+      final db = await database;
+      final result = await db.query(
+        'family_members',
+        where: 'householdNumber = ?',
+        whereArgs: [householdNumber],
+      );
+
+      if (result.isEmpty) {
+        if (kDebugMode) {
+          print('No family data found for household number: $householdNumber');
+        }
+        return {}; // Return an empty map or handle it as needed
+      }
+
+      return result.first;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching data: $e');
+      }
+      throw Exception('Failed to fetch family data');
+    }
   }
 
   // Method to query families receiving Samurdhi aid
@@ -487,5 +622,47 @@ class DatabaseHelper {
       whereArgs: [nationalId],
     );
     return result.isEmpty;
+  }
+
+  /// Replaces the current database with a new database file.
+  Future<void> replaceDatabase(String newDatabaseFilePath) async {
+    final currentDatabasePath =
+        join(await getDatabasesPath(), 'village_officer.db');
+
+    try {
+      // Close the current database connection, if open
+      if (_database != null) {
+        await _database!.close();
+        _database = null; // Reset the database instance
+      }
+
+      // Replace the current database file with the new one
+      final newDatabaseFile = File(newDatabaseFilePath);
+      if (await newDatabaseFile.exists()) {
+        // Delete the existing database file
+        final currentDatabaseFile = File(currentDatabasePath);
+        if (await currentDatabaseFile.exists()) {
+          await currentDatabaseFile.delete();
+        }
+
+        // Copy the new database file to the current database path
+        await newDatabaseFile.copy(currentDatabasePath);
+
+        // Reinitialize the database
+        _database = await _initDatabase();
+
+        if (kDebugMode) {
+          print("Database successfully replaced with $newDatabaseFilePath");
+        }
+      } else {
+        throw Exception(
+            "New database file does not exist: $newDatabaseFilePath");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error replacing database: $e");
+      }
+      throw Exception("Failed to replace the database: $e");
+    }
   }
 }

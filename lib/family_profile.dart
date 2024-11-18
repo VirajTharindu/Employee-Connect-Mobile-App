@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
 import 'family_member.dart';
+import 'package:intl/intl.dart';
 
-class FamilyProfile extends StatelessWidget {
+class FamilyProfile extends StatefulWidget {
   final List<FamilyMember> familyMembers;
 
   const FamilyProfile({Key? key, required this.familyMembers})
       : super(key: key);
 
   @override
+  _FamilyProfileState createState() => _FamilyProfileState();
+}
+
+class _FamilyProfileState extends State<FamilyProfile> {
+  late String dateOfModified; // Local variable to track the modified date
+
+  @override
+  void initState() {
+    super.initState();
+    dateOfModified = widget.familyMembers[0]
+        .dateOfModified; // Initialize with the first member's date
+  }
+
+  void updateModifiedDate(String newDate) {
+    setState(() {
+      dateOfModified = newDate; // Update the state with the new date
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Format the date of the family head to a more readable format
+    String formattedDate = _formatDate(widget.familyMembers[0].dateOfModified);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile of Household ${familyMembers[0].householdNumber}'),
+        title: Text(
+            'Profile of Household ${widget.familyMembers[0].householdNumber}'),
         backgroundColor: Colors.green,
       ),
       body: Padding(
@@ -22,16 +47,21 @@ class FamilyProfile extends StatelessWidget {
             children: [
               // Display household number only once
               Text(
-                'Household Number: ${familyMembers[0].householdNumber}',
+                'Household Number: ${widget.familyMembers[0].householdNumber}',
                 style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.green),
               ),
+              const SizedBox(height: 5),
+              Text(
+                'Modified on: $formattedDate',
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
+              ),
               const SizedBox(height: 20),
 
               // Map through family members with custom labels
-              ...familyMembers.asMap().entries.map((entry) {
+              ...widget.familyMembers.asMap().entries.map((entry) {
                 int index = entry.key;
                 FamilyMember member = entry.value;
 
@@ -57,7 +87,6 @@ class FamilyProfile extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Use "Family Head" for the first member, "Member 2" and so on for others
                         Text(
                           index == 0
                               ? 'Family Head'
@@ -67,9 +96,7 @@ class FamilyProfile extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Colors.green),
                         ),
-
                         const SizedBox(height: 10),
-                        // Display "Family Head Type" first for the family head
                         if (index == 0)
                           Text('Family Head Type: ${member.familyHeadType}',
                               style: const TextStyle(
@@ -93,23 +120,16 @@ class FamilyProfile extends StatelessWidget {
                         Text('Religion: ${member.religion}',
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.black87)),
-
-                        // Conditionally display "Relationship to Head" only for members other than the family head
                         if (index != 0)
                           Text(
                               'Relationship to Head: ${member.relationshipToHead}',
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.black87)),
-
-                        // Conditional display of "Grade" field
                         if (member.grade != 'None')
                           Text('Grade: ${member.grade ?? "N/A"}',
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.black87)),
-
-                        // Conditional display of "Education Qualification" and "Job Type"
                         if (member.grade == null || member.grade == 'None') ...[
-                          // Remove space for the family head
                           if (index == 0)
                             Text(
                                 'Education Qualification: ${member.educationQualification ?? "N/A"}',
@@ -125,8 +145,6 @@ class FamilyProfile extends StatelessWidget {
                               style: const TextStyle(
                                   fontSize: 16, color: Colors.black87)),
                         ],
-
-                        // Display only aids that are marked as "Yes"
                         if (aidDetails.isNotEmpty) ...[
                           const SizedBox(height: 10),
                           const Text('Aid Information:',
@@ -150,5 +168,15 @@ class FamilyProfile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Function to format the date
+  String _formatDate(String date) {
+    try {
+      DateTime parsedDate = DateTime.parse(date);
+      return "${parsedDate.day}-${parsedDate.month}-${parsedDate.year} ${parsedDate.hour}:${parsedDate.minute}";
+    } catch (e) {
+      return "N/A"; // Return "N/A" if the date parsing fails
+    }
   }
 }

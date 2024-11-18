@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:village_officer_app/Samurdhi.dart';
+
 import 'Aswasuma.dart';
 import 'Wedihiti.dart';
 import 'Mahajanadara.dart';
 import 'Abhadhitha.dart';
+
 import 'family_member.dart';
 import 'Shishyadara.dart';
 import 'Pilikadara.dart';
@@ -27,6 +29,8 @@ import 'People_Based_on_Age_Groups_Legally.dart';
 import 'Aids.dart';
 import 'Jobs.dart';
 import 'ShareDBUI.dart';
+import 'importDB.dart';
+import 'Update_family_Member_Data.dart';
 import 'family_member_form.dart';
 import 'family_list.dart';
 import 'family_profile.dart';
@@ -74,7 +78,12 @@ class VillageOfficerApp extends StatelessWidget {
         '/AgeLegally': (context) => PeopleBasedOnAgeGroupsLegally(),
         '/Aids': (context) => AidsScreen(),
         '/Jobs': (context) => JobsScreen(),
-        '/ShareDB': (context) => DatabaseTransferScreen(),
+        '/ShareDB': (context) => DatabaseScreen(),
+        '/Update': (context) => const UpdateFamilyMemberData(
+              householdNumber: '',
+              familyMembers: [],
+            ),
+        '/ImportDB': (context) => ImportDatabaseScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.green,

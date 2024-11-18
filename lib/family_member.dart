@@ -1,6 +1,9 @@
 // family_member.dart
 
+import 'package:intl/intl.dart';
+
 class FamilyMember {
+  int? id;
   String name;
   String nationalId;
   DateTime birthday;
@@ -9,6 +12,7 @@ class FamilyMember {
   String religion;
   String? educationQualification;
   String? jobType;
+
   bool isSamurdiAid;
   bool isAswasumaAid;
   bool isWedihitiAid;
@@ -22,10 +26,12 @@ class FamilyMember {
   String householdNumber; // Common for the whole family
   String familyHeadType; // 'family head male' or 'family head female'
   String relationshipToHead; // Relationship to family head
+  String dateOfModified;
 
   String? grade; // Optional grade field for non-family head members
 
   FamilyMember({
+    this.id,
     required this.name,
     required this.nationalId,
     required this.birthday,
@@ -45,12 +51,14 @@ class FamilyMember {
     required this.householdNumber,
     required this.familyHeadType,
     required this.relationshipToHead,
+    required this.dateOfModified,
     this.grade, // Nullable grade
   });
 
   // Convert a FamilyMember object to a Map to insert into SQLite
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'nationalId': nationalId,
       'birthday': birthday.toIso8601String(),
@@ -71,6 +79,7 @@ class FamilyMember {
       'householdNumber': householdNumber,
       'familyHeadType': familyHeadType,
       'relationshipToHead': relationshipToHead,
+      'dateOfModified': formatCurrentDate(), // Formatted date
 
       'grade': grade, // Nullable grade
     };
@@ -79,6 +88,7 @@ class FamilyMember {
   // Create a FamilyMember object from a Map (from SQLite)
   factory FamilyMember.fromMap(Map<String, dynamic> map) {
     return FamilyMember(
+      id: map['id'],
       name: map['name'],
       nationalId: map['nationalId'],
       birthday: DateTime.parse(map['birthday']),
@@ -99,8 +109,16 @@ class FamilyMember {
       householdNumber: map['householdNumber'],
       familyHeadType: map['familyHeadType'],
       relationshipToHead: map['relationshipToHead'],
+      dateOfModified: map['dateOfModified'] ?? DateTime.now().toIso8601String(),
 
       grade: map['grade'], // Initialize grade from Map
     );
+  }
+
+  // Format the current date
+  String formatCurrentDate() {
+    final now = DateTime.now();
+    final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return formatter.format(now);
   }
 }
