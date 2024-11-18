@@ -196,11 +196,19 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
     }
   }
 
+  // Function to request storage permissions
   Future<void> _checkAndRequestPermission() async {
-    if (await Permission.storage.request().isGranted) return;
-    PermissionStatus status = await Permission.storage.request();
-    if (status.isDenied || status.isPermanentlyDenied) {
-      throw 'Storage permission required.';
+    // For Android 13 and above, MANAGE_EXTERNAL_STORAGE is required for broad access
+    if (Platform.isAndroid) {
+      if (await Permission.manageExternalStorage.isGranted) {
+        return;
+      } else {
+        PermissionStatus status =
+            await Permission.manageExternalStorage.request();
+        if (!status.isGranted) {
+          throw 'Storage permission required.';
+        }
+      }
     }
   }
 

@@ -287,73 +287,84 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
 
-                    // Check if household number is unique (only if it has changed)
-                    if (familyHouseholdNumber != originalHouseholdNumber) {
-                      bool isHouseholdUnique = await DatabaseHelper()
-                          .isHouseholdNumberUnique(familyHouseholdNumber);
-                      if (!isHouseholdUnique) {
+                    try {
+                      // Check if household number is unique (only if it has changed)
+                      if (familyHouseholdNumber != originalHouseholdNumber) {
+                        bool isHouseholdUnique = await DatabaseHelper()
+                            .isHouseholdNumberUnique(familyHouseholdNumber);
+                        if (!isHouseholdUnique) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Household number already exists'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          return; // Stop execution if household number is not unique
+                        }
+                      }
+
+                      // Check if all national IDs are unique (only for changed IDs)
+                      bool allNationalIdsUnique = true;
+                      for (int i = 0; i < familyMembers.length; i++) {
+                        var member = familyMembers[i];
+                        // Check if this is a new member or an existing member with changed national ID
+                        if (i >= originalNationalIds.length ||
+                            member.nationalId != originalNationalIds[i]) {
+                          bool isNationalIdUnique = await DatabaseHelper()
+                              .isNationalIdUnique(member.nationalId);
+                          if (!isNationalIdUnique) {
+                            allNationalIdsUnique = false;
+                            break;
+                          }
+                        }
+                      }
+
+                      if (!allNationalIdsUnique) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Household number already exists'),
+                            content:
+                                Text('One or more National IDs already exist'),
                             backgroundColor: Colors.red,
                           ),
                         );
-                        return; // Stop execution if household number is not unique
+                        return; // Stop execution if any national ID is not unique
                       }
-                    }
 
-                    // Check if all national IDs are unique (only for changed IDs)
-                    bool allNationalIdsUnique = true;
-                    for (int i = 0; i < familyMembers.length; i++) {
-                      var member = familyMembers[i];
-                      // Perform check only if the national ID has changed
-                      if (member.nationalId != originalNationalIds[i]) {
-                        bool isNationalIdUnique = await DatabaseHelper()
-                            .isNationalIdUnique(member.nationalId);
-                        if (!isNationalIdUnique) {
-                          allNationalIdsUnique = false;
-                          break;
+                      // Insert or update family members
+                      for (var member in familyMembers) {
+                        // Assign the family household number to each member
+                        member.householdNumber = familyHouseholdNumber;
+
+                        if (member.id == null) {
+                          // If the member does not have an id (it's a new member), insert it into the database
+                          await DatabaseHelper().insertFamilyMember(member);
+                        } else {
+                          // If the member has an id (it's an existing member), update it in the database
+                          await DatabaseHelper().updateFamilyMember(member);
                         }
                       }
-                    }
 
-                    if (!allNationalIdsUnique) {
+                      // Show success message and return updated data to FamilyList
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content:
-                              Text('One or more National IDs already exist'),
+                          content: Text('Family details updated!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+
+                      Navigator.pop(context, {
+                        'householdNumber': familyHouseholdNumber,
+                        'familyMembers': familyMembers,
+                      });
+                    } catch (e) {
+                      // Display an error message if there is a failure during the process
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Failed to update family details: $e'),
                           backgroundColor: Colors.red,
                         ),
                       );
-                      return; // Stop execution if any national ID is not unique
                     }
-
-                    // Insert or update family members
-                    for (var member in familyMembers) {
-                      // Assign the family household number to each member
-                      member.householdNumber = familyHouseholdNumber;
-
-                      if (member.id == null) {
-                        // If the member does not have an id (it's a new member), insert it into the database
-                        await DatabaseHelper().insertFamilyMember(member);
-                      } else {
-                        // If the member has an id (it's an existing member), update it in the database
-                        await DatabaseHelper().updateFamilyMember(member);
-                      }
-                    }
-
-                    // Show success message and return updated data to FamilyList
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Family details updated!'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-
-                    Navigator.pop(context, {
-                      'householdNumber': familyHouseholdNumber,
-                      'familyMembers': familyMembers,
-                    });
                   }
                 },
                 child: Row(
