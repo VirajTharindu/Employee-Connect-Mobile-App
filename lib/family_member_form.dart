@@ -605,6 +605,15 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
           },
         ),
         CheckboxListTile(
+          title: const Text('Receiving Tuberculosis Aid'),
+          value: familyMembers[index].isTuberculosisAid,
+          onChanged: (bool? value) {
+            setState(() {
+              familyMembers[index].isTuberculosisAid = value!;
+            });
+          },
+        ),
+        CheckboxListTile(
           title: const Text('Receiving Any Aid'),
           value: familyMembers[index].isAnyAid,
           onChanged: (bool? value) {

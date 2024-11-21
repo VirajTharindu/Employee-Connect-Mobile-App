@@ -20,6 +20,7 @@ class FamilyMember {
   bool isAbhadithaAid;
   bool isShishshyadaraAid;
   bool isPilikadaraAid;
+  bool isTuberculosisAid;
   bool isAnyAid;
 
   // New properties
@@ -48,6 +49,7 @@ class FamilyMember {
     this.isShishshyadaraAid = false,
     this.isPilikadaraAid = false,
     this.isAnyAid = false,
+    this.isTuberculosisAid = false,
     required this.householdNumber,
     required this.familyHeadType,
     required this.relationshipToHead,
@@ -74,6 +76,7 @@ class FamilyMember {
       'isAbhadithaAid': isAbhadithaAid ? 1 : 0,
       'isShishshyadaraAid': isShishshyadaraAid ? 1 : 0,
       'isPilikadaraAid': isPilikadaraAid ? 1 : 0,
+      'isTuberculosisAid': isTuberculosisAid ? 1 : 0,
       'isAnyAid': isAnyAid ? 1 : 0,
 
       'householdNumber': householdNumber,
@@ -105,6 +108,7 @@ class FamilyMember {
       isShishshyadaraAid: map['isShishshyadaraAid'] == 1,
       isPilikadaraAid: map['isPilikadaraAid'] == 1,
       isAnyAid: map['isAnyAid'] == 1,
+      isTuberculosisAid: map['isTuberculosisAid'] == 1,
 
       householdNumber: map['householdNumber'],
       familyHeadType: map['familyHeadType'],

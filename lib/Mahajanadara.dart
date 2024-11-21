@@ -67,33 +67,44 @@ class _MahajanadaraFamiliesScreenState
       appBar: AppBar(
         title: Text('Mahajanadara Aid receivers'),
       ),
-      body: ListView.builder(
-        itemCount: groupedMahajanadaraFamilies.keys.length,
-        itemBuilder: (context, index) {
-          String householdNumber =
-              groupedMahajanadaraFamilies.keys.elementAt(index);
-          List<FamilyMember> members =
-              groupedMahajanadaraFamilies[householdNumber]!;
+      body: groupedMahajanadaraFamilies.isEmpty
+          ? const Center(
+              child: Text(
+                'No data available for Mahajanadara aid receivers.',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: groupedMahajanadaraFamilies.keys.length,
+              itemBuilder: (context, index) {
+                String householdNumber =
+                    groupedMahajanadaraFamilies.keys.elementAt(index);
+                List<FamilyMember> members =
+                    groupedMahajanadaraFamilies[householdNumber]!;
 
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
-            child: ExpansionTile(
-              title: Text('${index + 1}. Household Number: $householdNumber'),
-              subtitle: Text('Members: ${members.length}'),
-              children: members.asMap().entries.map((entry) {
-                int memberIndex = entry.key + 1;
-                FamilyMember familyMember = entry.value;
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                  child: ExpansionTile(
+                    title: Text(
+                        '${index + 1}. Household Number: $householdNumber'),
+                    subtitle: Text('Members: ${members.length}'),
+                    children: members.asMap().entries.map((entry) {
+                      int memberIndex = entry.key + 1;
+                      FamilyMember familyMember = entry.value;
 
-                return ListTile(
-                  title:
-                      Text('${getOrdinal(memberIndex)}: ${familyMember.name}'),
-                  subtitle: Text('National ID: ${familyMember.nationalId}'),
+                      return ListTile(
+                        title: Text(
+                            '${getOrdinal(memberIndex)}: ${familyMember.name}'),
+                        subtitle:
+                            Text('National ID: ${familyMember.nationalId}'),
+                      );
+                    }).toList(),
+                  ),
                 );
-              }).toList(),
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }

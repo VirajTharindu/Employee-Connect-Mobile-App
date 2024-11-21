@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:file_picker/file_picker.dart';
@@ -22,6 +23,7 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
   bool isImporting = false;
   String currentDatabaseFile = '';
   bool isDatabaseImported = false;
+  late List<Map<String, dynamic>> _dataList;
 
   @override
   void initState() {
@@ -297,6 +299,46 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
     }
   }
 
+  Future<void> switchDatabase(String newDatabasePath) async {
+    try {
+      // Replace the current database with the new database file
+      await DatabaseHelper.instance.replaceDatabase(newDatabasePath);
+
+      // Reload data from the active database
+      await _loadDataFromActiveDatabase();
+
+      if (kDebugMode) {
+        print("Successfully switched to the new database at $newDatabasePath");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error switching database: $e");
+      }
+      throw Exception("Failed to switch the database: $e");
+    }
+  }
+
+  Future<void> _loadDataFromActiveDatabase() async {
+    try {
+      // Fetch all family members from the active database
+      final data = await DatabaseHelper.instance.retrieveFamilyMembers();
+
+      // Update the state with the fetched data
+      setState(() {
+        _dataList = data.cast<Map<String, dynamic>>();
+      });
+
+      if (kDebugMode) {
+        print("Data successfully loaded from the active database.");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error loading data from the active database: $e");
+      }
+      throw Exception("Failed to load data from the active database: $e");
+    }
+  }
+
   Widget _buildImportedFileList() {
     return ListView.builder(
       itemCount: importedFiles.length,
@@ -456,11 +498,12 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
                   ? const Center(
                       child: Text(
                         'No files imported yet.',
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                     )
                   : _buildImportedFileList(),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

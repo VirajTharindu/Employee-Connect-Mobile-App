@@ -734,6 +734,15 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
           },
         ),
         CheckboxListTile(
+          title: const Text('Receiving Tuberculosis Aid'),
+          value: familyMembers[index].isTuberculosisAid,
+          onChanged: (bool? value) {
+            setState(() {
+              familyMembers[index].isTuberculosisAid = value!;
+            });
+          },
+        ),
+        CheckboxListTile(
           title: const Text('Receiving Any Aid'),
           value: familyMembers[index].isAnyAid,
           onChanged: (bool? value) {

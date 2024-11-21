@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:village_officer_app/TuberculosisAid.dart';
 // Import the relevant aid screens for navigation
 import 'Samurdhi.dart';
 import 'Aswasuma.dart';
@@ -19,6 +20,7 @@ class AidsScreen extends StatelessWidget {
     {'name': 'Disability Aid', 'route': AbhadithaFamiliesScreen()},
     {'name': "Students' Aid", 'route': ShishshyadaraFamiliesScreen()},
     {'name': 'Cancer Aid', 'route': PilikadaraFamiliesScreen()},
+    {'name': 'Tuberculosis Aid', 'route': TuberculosisAidScreen()},
     {'name': 'Any Aid', 'route': AnyAidFamiliesScreen()},
   ];
 

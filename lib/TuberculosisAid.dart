@@ -2,36 +2,39 @@ import 'package:flutter/material.dart';
 import 'database_helper.dart'; // Ensure you import your DatabaseHelper
 import 'family_member.dart'; // Import your FamilyMember model
 
-class SamurdhiFamiliesScreen extends StatefulWidget {
+class TuberculosisAidScreen extends StatefulWidget {
   @override
-  _SamurdhiFamiliesScreenState createState() => _SamurdhiFamiliesScreenState();
+  _TuberculosisAidScreenState createState() => _TuberculosisAidScreenState();
 }
 
-class _SamurdhiFamiliesScreenState extends State<SamurdhiFamiliesScreen> {
-  Map<String, List<FamilyMember>> groupedSamurdhiFamilies = {};
+class _TuberculosisAidScreenState extends State<TuberculosisAidScreen> {
+  Map<String, List<FamilyMember>> groupedTuberculosisFamilies = {};
 
   @override
   void initState() {
     super.initState();
-    _fetchSamurdhiFamilies();
+    _fetchTuberculosisAidFamilies();
   }
 
-  Future<void> _fetchSamurdhiFamilies() async {
+  Future<void> _fetchTuberculosisAidFamilies() async {
     final dbHelper = DatabaseHelper(); // Instantiate your DatabaseHelper
     final List<Map<String, dynamic>> familyMembersMap =
-        await dbHelper.querySamurdhiFamilies();
+        await dbHelper.queryTuberculosisAidFamilies();
 
-    final List<FamilyMember> familiesWithSamurdhi =
+    final List<FamilyMember> familiesWithTuberculosisAid =
         familyMembersMap.map((map) => FamilyMember.fromMap(map)).toList();
 
     // Group family members by household number
-    groupedSamurdhiFamilies.clear(); // Clear previous data
-    for (var familyMember in familiesWithSamurdhi) {
-      if (groupedSamurdhiFamilies.containsKey(familyMember.householdNumber)) {
-        groupedSamurdhiFamilies[familyMember.householdNumber]!
+    groupedTuberculosisFamilies.clear(); // Clear previous data
+    for (var familyMember in familiesWithTuberculosisAid) {
+      if (groupedTuberculosisFamilies
+          .containsKey(familyMember.householdNumber)) {
+        groupedTuberculosisFamilies[familyMember.householdNumber]!
             .add(familyMember);
       } else {
-        groupedSamurdhiFamilies[familyMember.householdNumber] = [familyMember];
+        groupedTuberculosisFamilies[familyMember.householdNumber] = [
+          familyMember
+        ];
       }
     }
 
@@ -60,24 +63,22 @@ class _SamurdhiFamiliesScreenState extends State<SamurdhiFamiliesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Samurdhi Aid receivers'),
+        title: const Text('Tuberculosis Aid Recipients'),
       ),
-      body: groupedSamurdhiFamilies.isEmpty
+      body: groupedTuberculosisFamilies.isEmpty
           ? const Center(
               child: Text(
-                'No data available for Samurdhi Aid recipients.',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
+                'No data available for Tuberculosis Aid recipients.',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             )
           : ListView.builder(
-              itemCount: groupedSamurdhiFamilies.keys.length,
+              itemCount: groupedTuberculosisFamilies.keys.length,
               itemBuilder: (context, index) {
                 String householdNumber =
-                    groupedSamurdhiFamilies.keys.elementAt(index);
+                    groupedTuberculosisFamilies.keys.elementAt(index);
                 List<FamilyMember> members =
-                    groupedSamurdhiFamilies[householdNumber]!;
+                    groupedTuberculosisFamilies[householdNumber]!;
 
                 return Card(
                   margin: const EdgeInsets.symmetric(

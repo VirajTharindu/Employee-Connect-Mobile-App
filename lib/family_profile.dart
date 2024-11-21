@@ -74,6 +74,7 @@ class _FamilyProfileState extends State<FamilyProfile> {
                   'Abhaditha Aid': member.isAbhadithaAid,
                   'Shishshyadara Aid': member.isShishshyadaraAid,
                   'Pilikadara Aid': member.isPilikadaraAid,
+                  'Tuberculosis Aid': member.isTuberculosisAid,
                   'Any Aid': member.isAnyAid,
                 }..removeWhere((_, isAid) => !isAid);
 

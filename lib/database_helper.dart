@@ -16,21 +16,24 @@ class DatabaseHelper {
   // Getter to access the single instance
   static DatabaseHelper get instance => _instance;
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDatabase();
-    return _database!;
+  // Close the current database connection
+  Future<void> close() async {
+    if (_database != null) {
+      await _database!.close();
+      _database = null; // Reset the database instance
+    }
   }
 
-  Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'village_officer.db');
-    if (kDebugMode) {
-      print("Database path: $path");
-    } // Add this line for debugging
-    return openDatabase(
+  // Reinitialize the database after switching
+  Future<void> initDatabase() async {
+    final directory = await getDatabasesPath();
+    String path = '$directory/village_officer.db';
+
+    _database = await openDatabase(
       path,
-      onCreate: (db, version) {
-        return db.execute(
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute(
           '''
           CREATE TABLE family_members(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,6 +52,7 @@ class DatabaseHelper {
             isAbhadithaAid INTEGER,
             isShishshyadaraAid INTEGER,
             isPilikadaraAid INTEGER,
+            isTuberculosisAid INTEGER,
             isAnyAid INTEGER,
             householdNumber TEXT,
             familyHeadType TEXT,
@@ -59,8 +63,55 @@ class DatabaseHelper {
           ''',
         );
       },
-      version: 1,
     );
+  }
+
+  // Get the database instance
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    await initDatabase();
+    return _database!;
+  }
+
+  // Replace the current database with a new one
+  Future<void> replaceDatabase(String newDatabaseFilePath) async {
+    final currentDatabasePath =
+        join(await getDatabasesPath(), 'village_officer.db');
+
+    try {
+      // Close the current database connection, if open
+      if (_database != null) {
+        await close();
+      }
+
+      // Replace the current database file
+      final newDatabaseFile = File(newDatabaseFilePath);
+      if (await newDatabaseFile.exists()) {
+        // Delete the existing database file
+        final currentDatabaseFile = File(currentDatabasePath);
+        if (await currentDatabaseFile.exists()) {
+          await currentDatabaseFile.delete();
+        }
+
+        // Copy the new database file to the app's database path
+        await newDatabaseFile.copy(currentDatabasePath);
+
+        // Reinitialize the database
+        await initDatabase();
+
+        if (kDebugMode) {
+          print("Database successfully replaced with $newDatabaseFilePath");
+        }
+      } else {
+        throw Exception(
+            "New database file does not exist: $newDatabaseFilePath");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error replacing database: $e");
+      }
+      throw Exception("Failed to replace the database: $e");
+    }
   }
 
   // Insert a FamilyMember record into the database
@@ -156,6 +207,7 @@ class DatabaseHelper {
       'isShishshyadaraAid': member.isShishshyadaraAid ? 1 : 0,
       'isPilikadaraAid': member.isPilikadaraAid ? 1 : 0,
       'isAnyAid': member.isAnyAid ? 1 : 0,
+      'isTuberculosisAid': member.isTuberculosisAid ? 1 : 0,
       // Add other fields if necessary
     };
 
@@ -310,6 +362,17 @@ class DatabaseHelper {
       'family_members',
       where: 'isPilikadaraAid = ?',
       whereArgs: [1], // Assuming 1 indicates receiving Pilikadara aid
+    );
+  }
+
+  Future<List<Map<String, dynamic>>> queryTuberculosisAidFamilies() async {
+    final db = await database;
+
+    // Query the family_members table where isTuberculosisAid is 1
+    return await db.query(
+      'family_members',
+      where: 'isTuberculosisAid = ?',
+      whereArgs: [1], // Assuming 1 indicates receiving Tuberculosis aid
     );
   }
 
@@ -622,47 +685,5 @@ class DatabaseHelper {
       whereArgs: [nationalId],
     );
     return result.isEmpty;
-  }
-
-  /// Replaces the current database with a new database file.
-  Future<void> replaceDatabase(String newDatabaseFilePath) async {
-    final currentDatabasePath =
-        join(await getDatabasesPath(), 'village_officer.db');
-
-    try {
-      // Close the current database connection, if open
-      if (_database != null) {
-        await _database!.close();
-        _database = null; // Reset the database instance
-      }
-
-      // Replace the current database file with the new one
-      final newDatabaseFile = File(newDatabaseFilePath);
-      if (await newDatabaseFile.exists()) {
-        // Delete the existing database file
-        final currentDatabaseFile = File(currentDatabasePath);
-        if (await currentDatabaseFile.exists()) {
-          await currentDatabaseFile.delete();
-        }
-
-        // Copy the new database file to the current database path
-        await newDatabaseFile.copy(currentDatabasePath);
-
-        // Reinitialize the database
-        _database = await _initDatabase();
-
-        if (kDebugMode) {
-          print("Database successfully replaced with $newDatabaseFilePath");
-        }
-      } else {
-        throw Exception(
-            "New database file does not exist: $newDatabaseFilePath");
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error replacing database: $e");
-      }
-      throw Exception("Failed to replace the database: $e");
-    }
   }
 }
