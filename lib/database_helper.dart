@@ -8,33 +8,41 @@ import 'family_member.dart'; // Import the FamilyMember model
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
+  String? _currentDatabasePath;
 
   factory DatabaseHelper() => _instance;
-
   DatabaseHelper._internal();
-
-  // Getter to access the single instance
   static DatabaseHelper get instance => _instance;
 
-  // Close the current database connection
+  // Add getter for current database path
+  String? get currentDatabasePath => _currentDatabasePath;
+
   Future<void> close() async {
     if (_database != null) {
       await _database!.close();
-      _database = null; // Reset the database instance
+      _database = null;
+      _currentDatabasePath = null; // Reset the current database path
     }
   }
 
-  // Reinitialize the database after switching
-  Future<void> initDatabase() async {
+  Future<void> initDatabase({String? customPath}) async {
+    if (_database != null) {
+      await close();
+    }
+
     final directory = await getDatabasesPath();
-    String path = '$directory/village_officer.db';
+    String path = customPath ?? join(directory, 'village_officer.db');
+    _currentDatabasePath = path; // Store the current database path
+
+    if (kDebugMode) {
+      print("Initializing database at path: $path");
+    }
 
     _database = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute(
-          '''
+        await db.execute('''
           CREATE TABLE family_members(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
@@ -60,8 +68,12 @@ class DatabaseHelper {
             grade TEXT,
             dateOfModified TEXT DEFAULT (datetime('now', 'localtime'))
           )
-          ''',
-        );
+        ''');
+      },
+      onOpen: (db) {
+        if (kDebugMode) {
+          print("Database opened successfully at: $path");
+        }
       },
     );
   }
@@ -75,42 +87,54 @@ class DatabaseHelper {
 
   // Replace the current database with a new one
   Future<void> replaceDatabase(String newDatabaseFilePath) async {
-    final currentDatabasePath =
-        join(await getDatabasesPath(), 'village_officer.db');
-
     try {
-      // Close the current database connection, if open
-      if (_database != null) {
-        await close();
+      // Validate the new database file
+      if (!await File(newDatabaseFilePath).exists()) {
+        throw Exception('New database file does not exist');
       }
 
-      // Replace the current database file
-      final newDatabaseFile = File(newDatabaseFilePath);
-      if (await newDatabaseFile.exists()) {
-        // Delete the existing database file
-        final currentDatabaseFile = File(currentDatabasePath);
-        if (await currentDatabaseFile.exists()) {
-          await currentDatabaseFile.delete();
-        }
+      // Close existing database connection
+      await close();
 
-        // Copy the new database file to the app's database path
-        await newDatabaseFile.copy(currentDatabasePath);
+      final directory = await getDatabasesPath();
+      final defaultDbPath = join(directory, 'village_officer.db');
 
-        // Reinitialize the database
-        await initDatabase();
+      // Create a backup of the current database if it exists
+      final existingDb = File(defaultDbPath);
+      if (await existingDb.exists()) {
+        final backupPath =
+            '${defaultDbPath}_backup_${DateTime.now().millisecondsSinceEpoch}';
+        await existingDb.copy(backupPath);
+      }
 
-        if (kDebugMode) {
-          print("Database successfully replaced with $newDatabaseFilePath");
-        }
-      } else {
-        throw Exception(
-            "New database file does not exist: $newDatabaseFilePath");
+      // Copy new database to app's database directory
+      await File(newDatabaseFilePath).copy(defaultDbPath);
+
+      // Initialize the new database with proper cleanup
+      await close();
+      await initDatabase();
+
+      // Verify the new database
+      final db = await database;
+      final tables = await db
+          .query('sqlite_master', where: 'type = ?', whereArgs: ['table']);
+
+      if (!tables.any((table) => table['name'] == 'family_members')) {
+        throw Exception('Invalid database structure');
+      }
+
+      if (kDebugMode) {
+        print("Database replaced successfully with: $newDatabaseFilePath");
+        print("New database opened at: $defaultDbPath");
       }
     } catch (e) {
       if (kDebugMode) {
         print("Error replacing database: $e");
       }
-      throw Exception("Failed to replace the database: $e");
+      // Attempt to recover from failed replacement
+      await close();
+      await initDatabase();
+      throw Exception("Failed to replace database: $e");
     }
   }
 
@@ -130,7 +154,17 @@ class DatabaseHelper {
   // Retrieve all FamilyMember records from the database
   Future<List<FamilyMember>> retrieveFamilyMembers() async {
     final db = await database;
+
+    // Force close and reopen the database to ensure fresh data
+    //await close();
+    //await initDatabase(customPath: _currentDatabasePath);
+
     final List<Map<String, dynamic>> maps = await db.query('family_members');
+
+    if (kDebugMode) {
+      print(
+          "Retrieved ${maps.length} family members from database at: $_currentDatabasePath");
+    }
 
     return List.generate(maps.length, (i) {
       return FamilyMember.fromMap(maps[i]);

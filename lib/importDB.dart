@@ -128,6 +128,7 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
       return;
     }
 
+    // Confirm import action
     bool? confirm = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
@@ -137,15 +138,11 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
               const Text('Are you sure you want to import this database file?'),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
+              onPressed: () => Navigator.of(context).pop(false),
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
+              onPressed: () => Navigator.of(context).pop(true),
               child: const Text('OK'),
             ),
           ],
@@ -164,23 +161,27 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
       final directory = await getDatabasesPath();
       String appDatabasePath = '$directory/village_officer.db';
 
+      // Copy selected file to replace the current database
       File selectedFile = File(selectedFilePath!);
       await selectedFile.copy(appDatabasePath);
 
       setState(() {
-        importedFiles.add(selectedFilePath!);
+        // Update the imported files list to contain only the current file
+        importedFiles = [selectedFilePath!]; // Ensure only one item in the list
         currentDatabaseFile = selectedFilePath!;
         isDatabaseImported = true;
+
         _setStatusMessageWithDelay(
             'Database imported successfully.', 'success');
         selectedFilePath = null;
       });
 
+      // Save updates persistently
       await _saveImportedFiles();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Database imported successfully!'),
+          content: Text('Database imported and replaced successfully!'),
           backgroundColor: Colors.green,
         ),
       );
@@ -301,41 +302,41 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
 
   Future<void> switchDatabase(String newDatabasePath) async {
     try {
-      // Replace the current database with the new database file
+      // Close any existing connections
+      await DatabaseHelper.instance.close();
+
+      // Replace the database
       await DatabaseHelper.instance.replaceDatabase(newDatabasePath);
 
-      // Reload data from the active database
+      // Force reload data from the new database
       await _loadDataFromActiveDatabase();
 
       if (kDebugMode) {
-        print("Successfully switched to the new database at $newDatabasePath");
+        print("Successfully switched to new database at $newDatabasePath");
       }
     } catch (e) {
       if (kDebugMode) {
         print("Error switching database: $e");
       }
-      throw Exception("Failed to switch the database: $e");
+      throw Exception("Failed to switch database: $e");
     }
   }
 
   Future<void> _loadDataFromActiveDatabase() async {
     try {
-      // Fetch all family members from the active database
       final data = await DatabaseHelper.instance.retrieveFamilyMembers();
-
-      // Update the state with the fetched data
       setState(() {
-        _dataList = data.cast<Map<String, dynamic>>();
+        _dataList = data.map((member) => member.toMap()).toList();
       });
 
       if (kDebugMode) {
-        print("Data successfully loaded from the active database.");
+        print("Loaded ${_dataList.length} records from active database");
       }
     } catch (e) {
       if (kDebugMode) {
-        print("Error loading data from the active database: $e");
+        print("Error loading data from active database: $e");
       }
-      throw Exception("Failed to load data from the active database: $e");
+      throw Exception("Failed to load data from active database: $e");
     }
   }
 

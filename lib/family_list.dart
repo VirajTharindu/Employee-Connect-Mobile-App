@@ -40,7 +40,6 @@ class _FamilyListState extends State<FamilyList> {
   }
 
   // Method to delete a household record and refresh the list
-  // Method to delete a household record and refresh the list
   void deleteHousehold(String householdNumber) async {
     bool? confirmed = await showDialog<bool>(
       context: context,
