@@ -213,6 +213,12 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                     // Check if all national IDs are unique
                     bool allNationalIdsUnique = true;
                     for (var member in familyMembers) {
+                      // Skip if the national ID is empty or null
+                      if (member.nationalId == null ||
+                          member.nationalId == '') {
+                        continue; // Skip this member if the national ID is empty or null
+                      }
+
                       bool isNationalIdUnique = await DatabaseHelper()
                           .isNationalIdUnique(member.nationalId);
                       if (!isNationalIdUnique) {
@@ -291,11 +297,6 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
           validator: (value) => value!.isEmpty ? 'Enter name' : null,
           onSaved: (value) => familyMembers[index].name = value!,
         ),
-        TextFormField(
-          decoration: const InputDecoration(labelText: 'National ID'),
-          validator: (value) => value!.isEmpty ? 'Enter National ID' : null,
-          onSaved: (value) => familyMembers[index].nationalId = value!,
-        ),
 
         GestureDetector(
           onTap: () async {
@@ -330,6 +331,18 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                   : 'Select Date of Birth', // Display placeholder if date not explicitly selected
             ),
           ),
+        ),
+
+        TextFormField(
+          decoration: const InputDecoration(labelText: 'National ID'),
+          validator: (value) {
+            if (familyMembers[index].age <= 16) {
+              // Skip validation for members under 16
+              return null;
+            }
+            return value!.isEmpty ? 'Enter National ID' : null;
+          },
+          onSaved: (value) => familyMembers[index].nationalId = value ?? '',
         ),
 
         DropdownButtonFormField<String>(

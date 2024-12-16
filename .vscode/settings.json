@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Sinhala"
     ],
-    "cmake.sourceDirectory": "C:/Users/User/village_officer_app/linux"
+    "cmake.sourceDirectory": "C:/Users/User/village_officer_app/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

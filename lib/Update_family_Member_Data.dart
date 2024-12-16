@@ -33,7 +33,7 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
   final TextEditingController _memberCountController = TextEditingController();
 
   String? originalHouseholdNumber; // Store the original household number
-  List<String> originalNationalIds = []; // Store the original national IDs
+  List<String?> originalNationalIds = []; // Store the original national IDs
 
   @override
   void initState() {
@@ -176,14 +176,14 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
   }
 
   // Function to delete a family member based on their national ID
-  Future<void> deleteFamilyMemberByNationalID(String nationalId) async {
+  Future<void> deleteFamilyMemberById(int Id) async {
     try {
       // Delete the family member from the database
-      await DatabaseHelper.instance.deleteFamilyMemberByNationalID(nationalId);
+      await DatabaseHelper.instance.deleteFamilyMemberById(Id);
 
       // Remove the family member from the local list
       setState(() {
-        familyMembers.removeWhere((member) => member.nationalId == nationalId);
+        familyMembers.removeWhere((member) => member.id == Id);
         familyMemberCount = familyMembers.length; // Update the count
         _memberCountController.text =
             familyMemberCount.toString(); // Update the displayed count
@@ -404,14 +404,6 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
           onSaved: (value) => familyMembers[index].name = value!,
         ),
 
-        // National ID field
-        TextFormField(
-          initialValue: familyMembers[index].nationalId,
-          decoration: const InputDecoration(labelText: 'National ID'),
-          validator: (value) => value!.isEmpty ? 'Enter National ID' : null,
-          onSaved: (value) => familyMembers[index].nationalId = value!,
-        ),
-
         // Birthday picker
         GestureDetector(
           onTap: () async {
@@ -442,6 +434,22 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
               ),
             ),
           ),
+        ),
+
+        TextFormField(
+          initialValue: familyMembers[index].nationalId,
+          decoration: const InputDecoration(labelText: 'National ID'),
+          validator: (value) {
+            if (familyMembers[index].age < 17) {
+              // Skip validation for members under 17
+              return null;
+            }
+            return value!.isEmpty ? 'Enter National ID' : null;
+          },
+          onSaved: (value) {
+            familyMembers[index].nationalId =
+                value ?? ''; // Allow empty for under 17
+          },
         ),
 
         // Nationality dropdown
@@ -574,7 +582,8 @@ class _UpdateFamilyMemberDataState extends State<UpdateFamilyMemberData> {
             alignment: Alignment.centerRight,
             child: ElevatedButton.icon(
               onPressed: () {
-                deleteFamilyMemberByNationalID(familyMembers[index].nationalId);
+                deleteFamilyMemberById(familyMembers[index].id ??
+                    0); // Call the delete function here
               },
               icon: const Icon(Icons.delete, color: Colors.white),
               label: const Text("Delete"),

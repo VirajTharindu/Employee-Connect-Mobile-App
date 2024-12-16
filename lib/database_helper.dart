@@ -195,12 +195,12 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> deleteFamilyMemberByNationalID(String nationalId) async {
+  Future<void> deleteFamilyMemberById(int Id) async {
     final db = await database;
     await db.delete(
       'family_members',
-      where: 'nationalId = ?',
-      whereArgs: [nationalId],
+      where: 'Id = ?',
+      whereArgs: [Id],
     );
   }
 
@@ -224,6 +224,7 @@ class DatabaseHelper {
       'name': member.name,
       'nationalId': member.nationalId,
       'birthday': member.birthday.toIso8601String(),
+      'age': member.age,
       'nationality': member.nationality,
       'religion': member.religion,
       'educationQualification': member.educationQualification,
@@ -422,7 +423,11 @@ class DatabaseHelper {
     );
   }
 
-  Future<List<Map<String, dynamic>>> queryAllStudentFamilyMembers() async {
+  Future<List<Map<String, dynamic>>> queryAllStudentFamilyMembers({
+    required int minAge,
+    required int maxAge,
+    required String dateOfModifiedPattern,
+  }) async {
     final db = await database; // Get the database instance
 
     // Define the grades you want to filter by
@@ -433,9 +438,17 @@ class DatabaseHelper {
     final String validGradesString =
         validGrades.map((grade) => "'$grade'").join(', ');
 
-    // Query the database for family members with grades between 1 and 13
+    // Query the database for family members with grades between 1 and 13,
+    // age within the specified range, and date matching the specified pattern
     return await db.rawQuery(
-        'SELECT * FROM family_members WHERE grade IN ($validGradesString)');
+      '''
+    SELECT * FROM family_members
+    WHERE grade IN ($validGradesString)
+      AND age BETWEEN ? AND ?
+      AND dateOfModified LIKE ?
+    ''',
+      [minAge, maxAge, dateOfModifiedPattern],
+    );
   }
 
   Future<List<Map<String, dynamic>>> queryReligionFamilyMembers() async {
@@ -711,7 +724,7 @@ class DatabaseHelper {
   }
 
   // Check if national ID is unique
-  Future<bool> isNationalIdUnique(String nationalId) async {
+  Future<bool> isNationalIdUnique(String? nationalId) async {
     final db = await database;
     final result = await db.query(
       'family_members',

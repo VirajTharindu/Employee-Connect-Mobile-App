@@ -105,9 +105,13 @@ class _FamilyProfileState extends State<FamilyProfile> {
                         Text('Name: ${member.name}',
                             style: const TextStyle(
                                 fontSize: 16, color: Colors.black87)),
-                        Text('National ID: ${member.nationalId}',
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.black87)),
+                        Text(
+                          index == 0 || member.age >= 16
+                              ? 'National ID: ${member.nationalId}'
+                              : 'National ID: Not Applicable',
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.black87),
+                        ),
                         Text(
                             'Birthday: ${member.birthday.toLocal().toString().split(' ')[0]}',
                             style: const TextStyle(

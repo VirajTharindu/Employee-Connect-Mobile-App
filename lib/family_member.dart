@@ -5,12 +5,13 @@ import 'package:intl/intl.dart';
 class FamilyMember {
   int? id;
   String name;
-  String nationalId;
+  String? nationalId;
   DateTime birthday;
   int age;
   String nationality;
   String religion;
   String? educationQualification;
+
   String? jobType;
 
   bool isSamurdiAid;
@@ -34,7 +35,7 @@ class FamilyMember {
   FamilyMember({
     this.id,
     required this.name,
-    required this.nationalId,
+    this.nationalId,
     required this.birthday,
     required this.age,
     required this.nationality,
