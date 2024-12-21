@@ -11,6 +11,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:village_officer_app/database_helper.dart'; // To import the Timer class
 
 class ImportDatabaseScreen extends StatefulWidget {
+  const ImportDatabaseScreen({super.key});
+
   @override
   _ImportDatabaseScreenState createState() => _ImportDatabaseScreenState();
 }
@@ -72,10 +74,10 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  child: const Text('Delete'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
+                  child: const Text('Delete'),
                 ),
               ],
             );
@@ -416,7 +418,7 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
               label: const Text('Select'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
-                primary: Colors.green,
+                backgroundColor: Colors.green,
               ),
             ),
             const Divider(height: 32, color: Colors.grey),
@@ -482,7 +484,7 @@ class _ImportDatabaseScreenState extends State<ImportDatabaseScreen> {
               label: const Text('Import'),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
-                primary: Colors.green,
+                backgroundColor: Colors.green,
               ),
             ),
             const Divider(height: 32, color: Colors.grey),

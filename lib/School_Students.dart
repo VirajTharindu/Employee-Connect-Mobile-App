@@ -12,6 +12,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class SchoolStudentsScreen extends StatefulWidget {
+  const SchoolStudentsScreen({super.key});
+
   @override
   _SchoolStudentsScreenState createState() => _SchoolStudentsScreenState();
 }
@@ -195,8 +197,8 @@ class _SchoolStudentsScreenState extends State<SchoolStudentsScreen> {
                   pw.SizedBox(height: 5),
                   pw.Table(
                     columnWidths: {
-                      0: pw.FlexColumnWidth(3),
-                      1: pw.FlexColumnWidth(1),
+                      0: const pw.FlexColumnWidth(3),
+                      1: const pw.FlexColumnWidth(1),
                     },
                     children: groupedSchoolStudents.entries
                         .map((categoryEntry) => pw.TableRow(
@@ -304,10 +306,10 @@ class _SchoolStudentsScreenState extends State<SchoolStudentsScreen> {
                                   border: pw.TableBorder.all(
                                       color: PdfColors.green100, width: 1),
                                   columnWidths: {
-                                    0: pw.FlexColumnWidth(3),
-                                    1: pw.FlexColumnWidth(2),
-                                    2: pw.FlexColumnWidth(2),
-                                    3: pw.FlexColumnWidth(2),
+                                    0: const pw.FlexColumnWidth(3),
+                                    1: const pw.FlexColumnWidth(2),
+                                    2: const pw.FlexColumnWidth(2),
+                                    3: const pw.FlexColumnWidth(2),
                                   },
                                   children: [
                                     // Table Header

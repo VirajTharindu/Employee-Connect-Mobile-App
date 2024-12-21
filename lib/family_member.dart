@@ -93,10 +93,10 @@ class FamilyMember {
   factory FamilyMember.fromMap(Map<String, dynamic> map) {
     return FamilyMember(
       id: map['id'],
-      name: map['name'],
+      name: map['name'] ?? '',
       nationalId: map['nationalId'],
       birthday: DateTime.parse(map['birthday']),
-      age: map['age'],
+      age: map['age'] ?? 0,
       nationality: map['nationality'],
       religion: map['religion'],
       educationQualification: map['educationQualification'],
@@ -111,8 +111,8 @@ class FamilyMember {
       isAnyAid: map['isAnyAid'] == 1,
       isTuberculosisAid: map['isTuberculosisAid'] == 1,
 
-      householdNumber: map['householdNumber'],
-      familyHeadType: map['familyHeadType'],
+      householdNumber: map['householdNumber'] ?? '',
+      familyHeadType: map['familyHeadType'] ?? '',
       relationshipToHead: map['relationshipToHead'],
       dateOfModified: map['dateOfModified'] ?? DateTime.now().toIso8601String(),
 

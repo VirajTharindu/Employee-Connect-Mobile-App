@@ -11,6 +11,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class GovernmentScreen extends StatefulWidget {
+  const GovernmentScreen({super.key});
+
   @override
   _GovernmentScreenState createState() => _GovernmentScreenState();
 }
@@ -200,10 +202,10 @@ class _GovernmentScreenState extends State<GovernmentScreen> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header
@@ -382,11 +384,11 @@ class _GovernmentScreenState extends State<GovernmentScreen> {
         future: _governmentFamilies,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No government employees found.'));
+            return const Center(child: Text('No government employees found.'));
           }
 
           final householdNumbers = groupedGovernmentFamilies.keys.toList();

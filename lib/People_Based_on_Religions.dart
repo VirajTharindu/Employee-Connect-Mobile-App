@@ -9,6 +9,8 @@ import 'database_helper.dart'; // Ensure you import your DatabaseHelper
 import 'family_member.dart'; // Import your FamilyMember model
 
 class PeopleBasedOnReligionsScreen extends StatefulWidget {
+  const PeopleBasedOnReligionsScreen({super.key});
+
   @override
   _PeopleBasedOnReligionsScreenState createState() =>
       _PeopleBasedOnReligionsScreenState();
@@ -166,8 +168,8 @@ class _PeopleBasedOnReligionsScreenState
                   pw.SizedBox(height: 5),
                   pw.Table(
                     columnWidths: {
-                      0: pw.FlexColumnWidth(3),
-                      1: pw.FlexColumnWidth(1),
+                      0: const pw.FlexColumnWidth(3),
+                      1: const pw.FlexColumnWidth(1),
                     },
                     children: groupedReligions.entries
                         .map((religionEntry) => pw.TableRow(
@@ -176,7 +178,7 @@ class _PeopleBasedOnReligionsScreenState
                                   padding: const pw.EdgeInsets.symmetric(
                                       vertical: 2),
                                   child: pw.Text(
-                                    "${religionEntry.key}",
+                                    religionEntry.key,
                                     style: pw.TextStyle(
                                         font: ttfRegular,
                                         fontSize: 10,
@@ -274,11 +276,11 @@ class _PeopleBasedOnReligionsScreenState
                                   border: pw.TableBorder.all(
                                       color: PdfColors.green100, width: 1),
                                   columnWidths: {
-                                    0: pw.FlexColumnWidth(3),
-                                    1: pw.FlexColumnWidth(2),
-                                    2: pw.FlexColumnWidth(2),
-                                    3: pw.FlexColumnWidth(2),
-                                    4: pw.FlexColumnWidth(3),
+                                    0: const pw.FlexColumnWidth(3),
+                                    1: const pw.FlexColumnWidth(2),
+                                    2: const pw.FlexColumnWidth(2),
+                                    3: const pw.FlexColumnWidth(2),
+                                    4: const pw.FlexColumnWidth(3),
                                   },
                                   children: [
                                     // Table Header
@@ -493,17 +495,17 @@ class _PeopleBasedOnReligionsScreenState
             return ListTile(
               title: Text(
                 religion,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text("No members found for this religion"),
+              subtitle: const Text("No members found for this religion"),
             );
           }
 
           // Display the households grouped by religion
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
             child: ExpansionTile(
-              title: Text('$religion'),
+              title: Text(religion),
               subtitle: Text('Households: ${householdMap.keys.length}'),
               children:
                   householdMap.entries.toList().asMap().entries.map((entry) {

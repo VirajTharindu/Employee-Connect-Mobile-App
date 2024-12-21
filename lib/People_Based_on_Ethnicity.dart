@@ -12,6 +12,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class PeopleBasedOnEthnicityScreen extends StatefulWidget {
+  const PeopleBasedOnEthnicityScreen({super.key});
+
   @override
   _PeopleBasedOnEthnicityScreenState createState() =>
       _PeopleBasedOnEthnicityScreenState();
@@ -184,8 +186,8 @@ class _PeopleBasedOnEthnicityScreenState
                   pw.SizedBox(height: 5),
                   pw.Table(
                     columnWidths: {
-                      0: pw.FlexColumnWidth(3),
-                      1: pw.FlexColumnWidth(1),
+                      0: const pw.FlexColumnWidth(3),
+                      1: const pw.FlexColumnWidth(1),
                     },
                     children: groupedEthnicities.entries
                         .map((levelEntry) => pw.TableRow(
@@ -194,7 +196,7 @@ class _PeopleBasedOnEthnicityScreenState
                                   padding: const pw.EdgeInsets.symmetric(
                                       vertical: 2),
                                   child: pw.Text(
-                                    "${levelEntry.key}",
+                                    levelEntry.key,
                                     style: pw.TextStyle(
                                         font: ttfRegular,
                                         fontSize: 10,
@@ -233,7 +235,7 @@ class _PeopleBasedOnEthnicityScreenState
                   children: [
                     pw.SizedBox(height: 15),
                     pw.Text(
-                      "$level",
+                      level,
                       style: pw.TextStyle(
                           font: ttfBold,
                           fontSize: 16,
@@ -292,11 +294,11 @@ class _PeopleBasedOnEthnicityScreenState
                                   border: pw.TableBorder.all(
                                       color: PdfColors.green100, width: 1),
                                   columnWidths: {
-                                    0: pw.FlexColumnWidth(3),
-                                    1: pw.FlexColumnWidth(2),
-                                    2: pw.FlexColumnWidth(2),
-                                    3: pw.FlexColumnWidth(2),
-                                    4: pw.FlexColumnWidth(3),
+                                    0: const pw.FlexColumnWidth(3),
+                                    1: const pw.FlexColumnWidth(2),
+                                    2: const pw.FlexColumnWidth(2),
+                                    3: const pw.FlexColumnWidth(2),
+                                    4: const pw.FlexColumnWidth(3),
                                   },
                                   children: [
                                     // Table Header
@@ -503,17 +505,17 @@ class _PeopleBasedOnEthnicityScreenState
             return ListTile(
               title: Text(
                 ethnicity,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text("No members found for this ethnicity"),
+              subtitle: const Text("No members found for this ethnicity"),
             );
           }
 
           // Display the households grouped by ethnicity
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
             child: ExpansionTile(
-              title: Text('$ethnicity'),
+              title: Text(ethnicity),
               subtitle: Text('Households: ${householdMap.keys.length}'),
               children:
                   householdMap.entries.toList().asMap().entries.map((entry) {

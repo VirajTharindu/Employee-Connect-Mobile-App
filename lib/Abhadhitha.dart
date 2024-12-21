@@ -9,41 +9,48 @@ import 'database_helper.dart';
 import 'family_member.dart';
 
 class AbhadithaFamiliesScreen extends StatefulWidget {
+  const AbhadithaFamiliesScreen({super.key});
+
   @override
-  _AbhadithaFamiliesScreenState createState() =>
-      _AbhadithaFamiliesScreenState();
+  AbhadithaFamiliesScreenState createState() => AbhadithaFamiliesScreenState();
 }
 
-class _AbhadithaFamiliesScreenState extends State<AbhadithaFamiliesScreen> {
+class AbhadithaFamiliesScreenState extends State<AbhadithaFamiliesScreen> {
   Map<String, List<FamilyMember>> groupedAbhadithaFamilies = {};
 
   @override
   void initState() {
     super.initState();
-    _fetchAbhadithaFamilies();
+    fetchAbhadithaFamilies();
   }
 
-  Future<void> _fetchAbhadithaFamilies() async {
-    final dbHelper = DatabaseHelper(); // Instantiate your DatabaseHelper
+  // Helper method for grouping family members
+  Map<String, List<FamilyMember>> groupFamilyMembers(
+      List<FamilyMember> members) {
+    final Map<String, List<FamilyMember>> groupedFamilies = {};
+    for (var familyMember in members) {
+      if (groupedFamilies.containsKey(familyMember.householdNumber)) {
+        groupedFamilies[familyMember.householdNumber]!.add(familyMember);
+      } else {
+        groupedFamilies[familyMember.householdNumber] = [familyMember];
+      }
+    }
+    return groupedFamilies;
+  }
+
+  // Fetch family members from the database and update the UI
+  Future<void> fetchAbhadithaFamilies() async {
+    final dbHelper = DatabaseHelper();
     final List<Map<String, dynamic>> familyMembersMap =
         await dbHelper.queryAbhadithaFamilies();
 
-    final List<FamilyMember> familiesWithAbhaditha =
+    final members =
         familyMembersMap.map((map) => FamilyMember.fromMap(map)).toList();
 
-    // Group family members by household number
-    groupedAbhadithaFamilies.clear(); // Clear previous data
-    for (var familyMember in familiesWithAbhaditha) {
-      if (groupedAbhadithaFamilies.containsKey(familyMember.householdNumber)) {
-        groupedAbhadithaFamilies[familyMember.householdNumber]!
-            .add(familyMember);
-      } else {
-        groupedAbhadithaFamilies[familyMember.householdNumber] = [familyMember];
-      }
-    }
+    final groupedFamilies = groupFamilyMembers(members);
 
     setState(() {
-      // Refresh UI
+      groupedAbhadithaFamilies = groupedFamilies;
     });
   }
 
@@ -201,10 +208,10 @@ class _AbhadithaFamiliesScreenState extends State<AbhadithaFamiliesScreen> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header
@@ -396,7 +403,8 @@ class _AbhadithaFamiliesScreenState extends State<AbhadithaFamiliesScreen> {
                     groupedAbhadithaFamilies[householdNumber]!;
 
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 10.0),
                   child: ExpansionTile(
                     title: Text(
                         '${index + 1}. Household Number: $householdNumber'),

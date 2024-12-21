@@ -22,18 +22,20 @@ class JobsScreen extends StatelessWidget {
     {'name': 'No Job or Retired', 'route': NoJobScreen()},
   ];
 
+  JobsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Job Types'),
+        title: const Text('Job Types'),
       ),
       body: ListView.builder(
         itemCount: jobs.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(jobs[index]['name']),
-            trailing: Icon(Icons.arrow_forward),
+            trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               // Navigate to the relevant screen
               Navigator.push(

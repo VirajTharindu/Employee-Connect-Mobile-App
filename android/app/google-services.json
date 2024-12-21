@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "345485076126",
+    "firebase_url": "https://village-officer-app-default-rtdb.firebaseio.com",
+    "project_id": "village-officer-app",
+    "storage_bucket": "village-officer-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345485076126:android:087f95241837d5c745bd8f",
+        "android_client_info": {
+          "package_name": "com.example.village_officer_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBifS86oOBVXklimvrp2lQhr0pGiOqgvac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

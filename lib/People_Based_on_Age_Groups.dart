@@ -12,6 +12,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class PeopleBasedOnAgeGroups extends StatefulWidget {
+  const PeopleBasedOnAgeGroups({super.key});
+
   @override
   _PeopleBasedOnAgeGroupsState createState() => _PeopleBasedOnAgeGroupsState();
 }
@@ -166,8 +168,8 @@ class _PeopleBasedOnAgeGroupsState extends State<PeopleBasedOnAgeGroups> {
                   pw.SizedBox(height: 5),
                   pw.Table(
                     columnWidths: {
-                      0: pw.FlexColumnWidth(3),
-                      1: pw.FlexColumnWidth(1),
+                      0: const pw.FlexColumnWidth(3),
+                      1: const pw.FlexColumnWidth(1),
                     },
                     children: ageGroups.entries
                         .map((ageEntry) => pw.TableRow(
@@ -176,7 +178,7 @@ class _PeopleBasedOnAgeGroupsState extends State<PeopleBasedOnAgeGroups> {
                                   padding: const pw.EdgeInsets.symmetric(
                                       vertical: 2),
                                   child: pw.Text(
-                                    "${ageEntry.key}",
+                                    ageEntry.key,
                                     style: pw.TextStyle(
                                         font: ttfRegular,
                                         fontSize: 10,
@@ -274,11 +276,11 @@ class _PeopleBasedOnAgeGroupsState extends State<PeopleBasedOnAgeGroups> {
                                   border: pw.TableBorder.all(
                                       color: PdfColors.green100, width: 1),
                                   columnWidths: {
-                                    0: pw.FlexColumnWidth(3),
-                                    1: pw.FlexColumnWidth(2),
-                                    2: pw.FlexColumnWidth(2),
-                                    3: pw.FlexColumnWidth(2),
-                                    4: pw.FlexColumnWidth(3),
+                                    0: const pw.FlexColumnWidth(3),
+                                    1: const pw.FlexColumnWidth(2),
+                                    2: const pw.FlexColumnWidth(2),
+                                    3: const pw.FlexColumnWidth(2),
+                                    4: const pw.FlexColumnWidth(3),
                                   },
                                   children: [
                                     // Table Header
@@ -530,7 +532,7 @@ class _PeopleBasedOnAgeGroupsState extends State<PeopleBasedOnAgeGroups> {
 
                           return ExpansionTile(
                             title: Text(
-                                '${householdIndex}. Household Number: $householdNumber'),
+                                '$householdIndex. Household Number: $householdNumber'),
                             subtitle: Text('Members: ${members.length}'),
                             children: members.asMap().entries.map((entry) {
                               int memberIndex = entry.key + 1;

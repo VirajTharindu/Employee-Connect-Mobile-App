@@ -6,6 +6,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseScreen extends StatefulWidget {
+  const DatabaseScreen({super.key});
+
   @override
   _DatabaseScreenState createState() => _DatabaseScreenState();
 }
@@ -196,7 +198,7 @@ class _DatabaseScreenState extends State<DatabaseScreen> {
                       : const Text('Copy Database File'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
-                    primary: Colors.green,
+                    backgroundColor: Colors.green,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     shape: RoundedRectangleBorder(
@@ -226,7 +228,8 @@ class StatusMessageWidget extends StatelessWidget {
   final String message;
   final String type;
 
-  const StatusMessageWidget({required this.message, required this.type});
+  const StatusMessageWidget(
+      {super.key, required this.message, required this.type});
 
   @override
   Widget build(BuildContext context) {

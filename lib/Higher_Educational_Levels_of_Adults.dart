@@ -12,6 +12,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class HigherEducationalLevelsOfAdultsScreen extends StatefulWidget {
+  const HigherEducationalLevelsOfAdultsScreen({super.key});
+
   @override
   _HigherEducationalLevelsOfAdultsScreenState createState() =>
       _HigherEducationalLevelsOfAdultsScreenState();
@@ -171,8 +173,8 @@ class _HigherEducationalLevelsOfAdultsScreenState
                   pw.SizedBox(height: 5),
                   pw.Table(
                     columnWidths: {
-                      0: pw.FlexColumnWidth(3),
-                      1: pw.FlexColumnWidth(1),
+                      0: const pw.FlexColumnWidth(3),
+                      1: const pw.FlexColumnWidth(1),
                     },
                     children: groupedEducationLevels.entries
                         .map((levelEntry) => pw.TableRow(
@@ -181,7 +183,7 @@ class _HigherEducationalLevelsOfAdultsScreenState
                                   padding: const pw.EdgeInsets.symmetric(
                                       vertical: 2),
                                   child: pw.Text(
-                                    "${levelEntry.key}",
+                                    levelEntry.key,
                                     style: pw.TextStyle(
                                         font: ttfRegular,
                                         fontSize: 10,
@@ -279,11 +281,11 @@ class _HigherEducationalLevelsOfAdultsScreenState
                                   border: pw.TableBorder.all(
                                       color: PdfColors.green100, width: 1),
                                   columnWidths: {
-                                    0: pw.FlexColumnWidth(3),
-                                    1: pw.FlexColumnWidth(2),
-                                    2: pw.FlexColumnWidth(2),
-                                    3: pw.FlexColumnWidth(2),
-                                    4: pw.FlexColumnWidth(3),
+                                    0: const pw.FlexColumnWidth(3),
+                                    1: const pw.FlexColumnWidth(2),
+                                    2: const pw.FlexColumnWidth(2),
+                                    3: const pw.FlexColumnWidth(2),
+                                    4: const pw.FlexColumnWidth(3),
                                   },
                                   children: [
                                     // Table Header
@@ -507,17 +509,17 @@ class _HigherEducationalLevelsOfAdultsScreenState
             return ListTile(
               title: Text(
                 educationLevel,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text("No members found for this education level"),
+              subtitle: const Text("No members found for this education level"),
             );
           }
 
           // Otherwise, display the members grouped by household as usual
           return Card(
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
             child: ExpansionTile(
-              title: Text('$educationLevel'),
+              title: Text(educationLevel),
               subtitle: Text('Households: ${householdMembers.keys.length}'),
               children: householdMembers.entries.map((entry) {
                 String householdNumber = entry.key;

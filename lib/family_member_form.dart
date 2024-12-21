@@ -4,6 +4,8 @@ import 'family_member.dart';
 import 'package:intl/intl.dart';
 
 class FamilyMemberForm extends StatefulWidget {
+  const FamilyMemberForm({super.key});
+
   @override
   _FamilyMemberFormState createState() => _FamilyMemberFormState();
 }
@@ -264,7 +266,7 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(Icons.save, size: 24), // Add a save icon
                     SizedBox(width: 8), // Space between icon and text
                     Text('Save'),
@@ -471,9 +473,9 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
 
       items: const [
         DropdownMenuItem(
-            child: Text('Family Head - Male'), value: 'Family Head - Male'),
+            value: 'Family Head - Male', child: Text('Family Head - Male')),
         DropdownMenuItem(
-            child: Text('Family Head - Female'), value: 'Family Head - Female'),
+            value: 'Family Head - Female', child: Text('Family Head - Female')),
       ],
       onChanged: (value) {
         setState(() {
@@ -511,21 +513,21 @@ class _FamilyMemberFormState extends State<FamilyMemberForm> {
           decoration: const InputDecoration(labelText: 'Grade'),
           value: member.grade,
           items: const [
-            DropdownMenuItem(child: Text('None'), value: 'None'),
-            DropdownMenuItem(child: Text('Preschool'), value: 'Preschool'),
-            DropdownMenuItem(child: Text('1'), value: '1'),
-            DropdownMenuItem(child: Text('2'), value: '2'),
-            DropdownMenuItem(child: Text('3'), value: '3'),
-            DropdownMenuItem(child: Text('4'), value: '4'),
-            DropdownMenuItem(child: Text('5'), value: '5'),
-            DropdownMenuItem(child: Text('6'), value: '6'),
-            DropdownMenuItem(child: Text('7'), value: '7'),
-            DropdownMenuItem(child: Text('8'), value: '8'),
-            DropdownMenuItem(child: Text('9'), value: '9'),
-            DropdownMenuItem(child: Text('10'), value: '10'),
-            DropdownMenuItem(child: Text('11'), value: '11'),
-            DropdownMenuItem(child: Text('12'), value: '12'),
-            DropdownMenuItem(child: Text('13'), value: '13'),
+            DropdownMenuItem(value: 'None', child: Text('None')),
+            DropdownMenuItem(value: 'Preschool', child: Text('Preschool')),
+            DropdownMenuItem(value: '1', child: Text('1')),
+            DropdownMenuItem(value: '2', child: Text('2')),
+            DropdownMenuItem(value: '3', child: Text('3')),
+            DropdownMenuItem(value: '4', child: Text('4')),
+            DropdownMenuItem(value: '5', child: Text('5')),
+            DropdownMenuItem(value: '6', child: Text('6')),
+            DropdownMenuItem(value: '7', child: Text('7')),
+            DropdownMenuItem(value: '8', child: Text('8')),
+            DropdownMenuItem(value: '9', child: Text('9')),
+            DropdownMenuItem(value: '10', child: Text('10')),
+            DropdownMenuItem(value: '11', child: Text('11')),
+            DropdownMenuItem(value: '12', child: Text('12')),
+            DropdownMenuItem(value: '13', child: Text('13')),
           ],
           onChanged: (value) {
             setState(() {

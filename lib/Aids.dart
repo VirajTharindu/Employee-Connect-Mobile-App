@@ -24,18 +24,20 @@ class AidsScreen extends StatelessWidget {
     {'name': 'Any Aid', 'route': AnyAidFamiliesScreen()},
   ];
 
+  AidsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Aid Types'),
+        title: const Text('Aid Types'),
       ),
       body: ListView.builder(
         itemCount: aids.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(aids[index]['name']),
-            trailing: Icon(Icons.arrow_forward),
+            trailing: const Icon(Icons.arrow_forward),
             onTap: () {
               // Navigate to the relevant screen
               Navigator.push(

@@ -9,6 +9,8 @@ import 'database_helper.dart';
 import 'family_member.dart';
 
 class ShishshyadaraFamiliesScreen extends StatefulWidget {
+  const ShishshyadaraFamiliesScreen({super.key});
+
   @override
   _ShishshyadaraFamiliesScreenState createState() =>
       _ShishshyadaraFamiliesScreenState();
@@ -200,10 +202,10 @@ class _ShishshyadaraFamiliesScreenState
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header
@@ -385,7 +387,8 @@ class _ShishshyadaraFamiliesScreenState
                     groupedShishshyadaraFamilies[householdNumber]!;
 
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 10.0),
                   child: ExpansionTile(
                     title: Text(
                         '${index + 1}. Household Number: $householdNumber'),

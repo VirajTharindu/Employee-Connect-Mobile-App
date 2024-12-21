@@ -9,6 +9,8 @@ import 'database_helper.dart';
 import 'family_member.dart';
 
 class TuberculosisAidScreen extends StatefulWidget {
+  const TuberculosisAidScreen({super.key});
+
   @override
   _TuberculosisAidScreenState createState() => _TuberculosisAidScreenState();
 }
@@ -203,10 +205,10 @@ class _TuberculosisAidScreenState extends State<TuberculosisAidScreen> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header

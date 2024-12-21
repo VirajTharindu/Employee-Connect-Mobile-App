@@ -1,17 +1,18 @@
-// main.dart
-
 import 'package:flutter/material.dart';
-import 'package:village_officer_app/Samurdhi.dart';
+import 'package:village_officer_app/license_manager.dart';
+import 'package:village_officer_app/license_page.dart';
+import 'family_member_form.dart';
+import 'family_list.dart';
+import 'family_profile.dart';
 
+// Import other screens
+import 'Samurdhi.dart';
 import 'Aswasuma.dart';
 import 'Wedihiti.dart';
 import 'Mahajanadara.dart';
 import 'Abhadhitha.dart';
-
-import 'family_member.dart';
 import 'Shishyadara.dart';
 import 'Pilikadara.dart';
-
 import 'AnyAid.dart';
 import 'School_Students.dart';
 import 'Government.dart';
@@ -32,11 +33,9 @@ import 'Jobs.dart';
 import 'ShareDBUI.dart';
 import 'importDB.dart';
 import 'Update_family_Member_Data.dart';
-import 'family_member_form.dart';
-import 'family_list.dart';
-import 'family_profile.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const VillageOfficerApp());
 }
 
@@ -49,7 +48,8 @@ class VillageOfficerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Village Officer App',
       routes: {
-        '/family_member_form': (context) => FamilyMemberForm(),
+        '/License': (context) => const LicenseActivationPage(),
+        '/Home': (context) => FamilyMemberForm(),
         '/family_list': (context) => FamilyList(),
         '/family_profile': (context) => const FamilyProfile(
               familyMembers: [],
@@ -89,7 +89,18 @@ class VillageOfficerApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: FamilyMemberForm(),
+      home: FutureBuilder<bool>(
+        future: LicenseManager.isAppActivated(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final isActivated = snapshot.data ?? false;
+          return isActivated
+              ? FamilyMemberForm()
+              : const LicenseActivationPage();
+        },
+      ),
     );
   }
 }

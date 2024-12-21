@@ -11,6 +11,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class SelfEmployedScreen extends StatefulWidget {
+  const SelfEmployedScreen({super.key});
+
   @override
   _SelfEmployedScreenState createState() => _SelfEmployedScreenState();
 }
@@ -208,10 +210,10 @@ class _SelfEmployedScreenState extends State<SelfEmployedScreen> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header
@@ -385,11 +387,12 @@ class _SelfEmployedScreenState extends State<SelfEmployedScreen> {
         future: _selfEmployedFamilies,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No self-employed employees found.'));
+            return const Center(
+                child: Text('No self-employed employees found.'));
           }
 
           final householdNumbers = groupedSelfEmployedFamilies.keys.toList();

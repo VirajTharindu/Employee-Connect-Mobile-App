@@ -34,13 +34,21 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.11
   share_plus: ^4.0.10
-  file_picker: ^5.2.3
+  file_picker: ^5.2.5
   permission_handler: ^10.4.5
   flutter_archive: ^5.0.0
   intl: ^0.18.0
   pdf: ^3.9.0
   printing: ^5.8.0
 
+  firebase_core: ^2.0.0
+  cloud_firestore: ^4.0.0
+  flutter_secure_storage: ^8.0.0
+
+  encrypt: ^5.0.1
+
+  
+  
     
  
     
@@ -52,8 +60,21 @@ dependencies:
   file_saver: ^0.1.1
 
 dev_dependencies:
+  sqflite_common_ffi: ^2.0.1
+  mockito: ^5.3.2
+  build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  integration_test: 
+    
+  
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/Village_Connect.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

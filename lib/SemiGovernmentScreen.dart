@@ -11,6 +11,8 @@ import 'package:printing/printing.dart';
 import 'database_helper.dart';
 
 class SemiGovernmentScreen extends StatefulWidget {
+  const SemiGovernmentScreen({super.key});
+
   @override
   _SemiGovernmentScreenState createState() => _SemiGovernmentScreenState();
 }
@@ -200,10 +202,10 @@ class _SemiGovernmentScreenState extends State<SemiGovernmentScreen> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(2),
-                            1: pw.FlexColumnWidth(3),
-                            2: pw.FlexColumnWidth(3),
-                            3: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(3),
+                            2: const pw.FlexColumnWidth(3),
+                            3: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header

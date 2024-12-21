@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'family_member.dart';
-import 'package:intl/intl.dart';
 
 class FamilyProfile extends StatefulWidget {
   final List<FamilyMember> familyMembers;

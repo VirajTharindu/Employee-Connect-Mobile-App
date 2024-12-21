@@ -12,6 +12,8 @@ import 'update_family_member_data.dart';
 import 'package:file_saver/file_saver.dart';
 
 class FamilyList extends StatefulWidget {
+  const FamilyList({super.key});
+
   @override
   _FamilyListState createState() => _FamilyListState();
 }
@@ -214,12 +216,12 @@ class _FamilyListState extends State<FamilyList> {
                           border: pw.TableBorder.all(
                               color: PdfColors.green100, width: 1),
                           columnWidths: {
-                            0: pw.FlexColumnWidth(1),
-                            1: pw.FlexColumnWidth(2),
-                            2: pw.FlexColumnWidth(2),
-                            3: pw.FlexColumnWidth(1),
-                            4: pw.FlexColumnWidth(2),
-                            5: pw.FlexColumnWidth(2),
+                            0: const pw.FlexColumnWidth(2),
+                            1: const pw.FlexColumnWidth(2),
+                            2: const pw.FlexColumnWidth(2),
+                            3: const pw.FlexColumnWidth(1),
+                            4: const pw.FlexColumnWidth(2),
+                            5: const pw.FlexColumnWidth(2),
                           },
                           children: [
                             // Table Header
