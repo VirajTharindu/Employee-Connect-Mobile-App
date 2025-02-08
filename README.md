@@ -109,7 +109,7 @@ Ensure Android Studio / VS Code is set up
 
 📥 Clone the Repository
 
-git clone https://github.com/your-username/village-officer-app.git (copy-paste & run in your PowerShell)
+git clone  (copy-paste & run in your PowerShell)
 
 cd village-officer-app (copy-paste & run in your PowerShell)
 
@@ -169,7 +169,7 @@ Create a Pull Request
 
 👤 Your Viraj Tharindu
 
-📧 Email: virajtharindu97@gmail.com
+📧 Email: virajtharindu1997@gmail.com
 
 🔗 GitHub: https://github.com/VirajTharindu
 
