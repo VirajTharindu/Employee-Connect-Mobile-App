@@ -88,19 +88,19 @@ Ensure Android Studio / VS Code is set up
 
 📥 Clone the Repository
 
-git clone https://github.com/your-username/village-officer-app.git
+git clone https://github.com/your-username/village-officer-app.git (copy-paste & run in your PowerShell)
 
-cd village-officer-app
+cd village-officer-app (copy-paste & run in your PowerShell)
 
 
 📦 Install Dependencies
 
-flutter pub get
+flutter pub get (copy-paste & run in your PowerShell)
 
 
 ▶️ Run the App
 
-flutter run
+flutter run (copy-paste & run in your PowerShell)
 
 (Use flutter run --release for production builds.)
 
