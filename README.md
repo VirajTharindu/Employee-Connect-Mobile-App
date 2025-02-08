@@ -1,4 +1,4 @@
-Village Connect (Village Officer App)📱🏡
+'Village Connect' Mobile App (Family Data Management System for Village Officers)📱🏡
 
 A Flutter-based mobile application for village officers to manage community data, aid programs, and citizen profiles efficiently.
 
