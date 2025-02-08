@@ -1,4 +1,4 @@
-Village Officer App (Village Connect)📱🏡
+Village Connect (Village Officer App)📱🏡
 
 A Flutter-based mobile application for village officers to manage community data, aid programs, and citizen profiles efficiently.
 
@@ -109,7 +109,7 @@ Ensure Android Studio / VS Code is set up
 
 📥 Clone the Repository
 
-git clone  (copy-paste & run in your PowerShell)
+git clone https://github.com/VirajTharindu/Village-Connect-Mobile-App.git (copy-paste & run in your PowerShell)
 
 cd village-officer-app (copy-paste & run in your PowerShell)
 
