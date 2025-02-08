@@ -71,7 +71,7 @@ SQLite / External DB Support – Data storage
 
 📸 Screenshots
 
-!Data[Data Exporting](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Data%20Exporting.jpg)
+[Data Exporting](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Data%20Exporting.jpg)
 
 
 🚀 How to Run the Project
