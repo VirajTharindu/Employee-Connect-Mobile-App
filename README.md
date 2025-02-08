@@ -71,7 +71,17 @@ SQLite / External DB Support – Data storage
 
 📸 Screenshots
 
+[Family Data Entry](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20Entry.jpg)
+[Family Data List](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20List.jpg)
+[Family Aid Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20Types.jpg)
+[Job Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Job%20Types.jpg)
+[Family Aid Details](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20details%20(Samurdi).jpg)
+[PDF Downloading for a Filtered Category](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/PDF%20Downloading%20Screen%20for%20a%20Filtered%20Category.jpg)
+[Profile for a User](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Profile%20for%20an%20User.jpg)
+[Updating for a Screen](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Updating%20screen%20for%20an%20User.jpg)
 [Data Exporting](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Data%20Exporting.jpg)
+[Data Importing](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Data%20Importing.jpg)
+[Security License Activation](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Security%20License%20Activation.jpg)
 
 
 🚀 How to Run the Project
