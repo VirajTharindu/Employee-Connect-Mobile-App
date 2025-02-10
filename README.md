@@ -2,7 +2,7 @@
 
 A Flutter-based mobile application for village officers to manage community data, aid programs, and citizen profiles efficiently.
 
-### 📌 Features
+## 📌 Features
 
 ## 1️⃣ Citizen & Family Data Management
 
