@@ -171,5 +171,5 @@ Create a Pull Request
 🔗 GitHub: https://github.com/VirajTharindu
 
 
-## ⭐ If you found this project useful, don’t forget to give it a star on GitHub! ⭐
+⭐ If you found this project useful, don’t forget to give it a star on GitHub! ⭐
 
