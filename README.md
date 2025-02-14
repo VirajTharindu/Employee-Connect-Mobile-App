@@ -1,12 +1,12 @@
-## 'Village Connect' Mobile App (Family Data Management System for Village Officers)📱🏡
+## 'Employee Connect' Mobile App (Employee Data Management System)📱🏡
 
-A Flutter-based mobile application for village officers to manage community data, aid programs, and citizen profiles efficiently.
+A Flutter-based mobile application to manage community data of employees, aid programs, and profiles efficiently.
 
 ## 📌 Features
 
-## 1️⃣ Citizen & Family Data Management
+## 1️⃣ Employee & Employee Family Data Management
 
-Add, update, and manage family profiles.
+Add, update, delete, view and manage employee & employee family profiles.
 
 Store personal details, occupation, and aid eligibility.
 
@@ -18,11 +18,11 @@ Screens: family_member_form.dart, family_list.dart, family_profile.dart.
 
 Manage government aid programs:
 
-Samurdhi, Aswasuma, Wedihiti, Mahajanadara, Abhadhitha, Pilikadara, etc.
+Pilikadara, Tuberculosis, Aswasuma, Wedihiti, Mahajanadara, Abhadhitha, etc.
 
 Track beneficiaries and eligibility.
 
-Screens: Samurdhi.dart, Aswasuma.dart, etc.
+Screens: Pilikadara.dart, Tuberculosis.dart, etc.
 
 
 ## 3️⃣ Occupation & Demographics Categorization
@@ -71,15 +71,15 @@ SQLite / External DB Support – Data storage
 
 ## 📸 Screenshots
 
-[Family Data Entry](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20Entry.jpg)
+[Employee's Family Data Entry](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20Entry.jpg)
 
-[Family Data List](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20List.jpg)
+[Employee's Family Data List](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Data%20List.jpg)
 
-[Family Aid Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20Types.jpg)
+[Employee's Family Aid Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20Types.jpg)
 
-[Job Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Job%20Types.jpg)
+[Employee's Job Types](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Job%20Types.jpg)
 
-[Family Aid Details](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20details%20(Samurdi).jpg)
+[Employee's Family Aid Details](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/Family%20Aid%20details%20(Samurdi).jpg)
 
 [PDF Downloading for a Filtered Category](https://github.com/VirajTharindu/Village_Officer_App/blob/main/Screenshots/PDF%20Downloading%20Screen%20for%20a%20Filtered%20Category.jpg)
 
@@ -109,9 +109,9 @@ Ensure Android Studio / VS Code is set up
 
 ## 📥 Clone the Repository
 
-git clone https://github.com/VirajTharindu/Village-Connect-Mobile-App.git (copy-paste & run in your PowerShell)
+git clone  (copy-paste & run in your PowerShell)
 
-cd village-officer-app (copy-paste & run in your PowerShell)
+cd your project folder (copy-paste & run in your PowerShell)
 
 
 ## 📦 Install Dependencies
@@ -140,8 +140,6 @@ Restricted access based on license activation.
 ✅ Backend API for remote database access.
 
 ✅ Biometric Authentication for extra security.
-
-✅ PDF/CSV Export for reports.
 
 ✅ Multilingual Support (Sinhala, Tamil, English).
 
