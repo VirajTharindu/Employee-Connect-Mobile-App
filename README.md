@@ -1,6 +1,6 @@
 ## 'Employee Connect' Mobile App (Employee Data Management System)📱🏡
 
-A Flutter-based mobile application to manage community data of employees, aid programs, and profiles efficiently.
+A Flutter-based mobile application to manage community data of employees, aid programs, and profiles efficiently for companies or organizations.
 
 ## 📌 Features
 
