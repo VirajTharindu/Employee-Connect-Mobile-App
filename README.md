@@ -109,7 +109,7 @@ Ensure Android Studio / VS Code is set up
 
 ## 📥 Clone the Repository
 
-git clone  (copy-paste & run in your PowerShell)
+git clone https://github.com/VirajTharindu/Employee-Connect-Mobile-App.git (copy-paste & run in your PowerShell)
 
 cd your project folder (copy-paste & run in your PowerShell)
 
