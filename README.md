@@ -45,7 +45,7 @@ The following resources demonstrate the system's behavior:
 - 📝 [License](#-license)
 - 📩 [Contact](#-contact)
 
-If deeper technical access is required, it can be provided upon request.
+If deeper technical access is required, it can be provided upon request!
 
 ---
 
