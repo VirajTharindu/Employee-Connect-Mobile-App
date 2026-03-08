@@ -184,7 +184,7 @@ This repository is published for **portfolio and educational review purposes**.
 
 The source code may not be accessed, copied, modified, distributed, or used without explicit permission from the author.
 
-© 2024 Viraj Tharindu — All Rights Reserved!!
+© 2024 Viraj Tharindu — All Rights Reserved!
 
 ---
 
@@ -204,5 +204,5 @@ I would be happy to discuss the architecture, design decisions, or provide a pri
 ---
 
 <p align="center">
-  <em>Built with ❤️ for efficient Employee administration.</em>
+  <em>Built with ❤️ for efficient Employee administration!</em>
 </p>
