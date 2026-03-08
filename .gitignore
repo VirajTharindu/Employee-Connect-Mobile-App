@@ -48,9 +48,6 @@ app.*.map.json
 *.sqlite
 *.sqlite3
 
-# Test coverage
-coverage/
-
 # Logs
 *.log
 
