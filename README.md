@@ -63,7 +63,7 @@ If deeper technical access is required, it can be provided upon request.
 |---------------|---------------|---------------|
 | ![](Screenshots/Family%20Data%20Entry.jpg) | ![](Screenshots/Family%20Data%20List.jpg) | ![](Screenshots/Family%20Aid%20Types.jpg) |
 
-| Aid Details (Samurdhi) | Employment Analytics |
+| Aid Details (Employment Analytics) | Job Types |
 |---------------|---------------|
 | ![](Screenshots/Family%20Aid%20details%20(Samurdi).jpg) | ![](Screenshots/Job%20Types.jpg) |
 
