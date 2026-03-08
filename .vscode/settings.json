@@ -1,6 +1,5 @@
 {
-    "cSpell.words": [
-        "Sinhala"
-    ],
-    "cmake.sourceDirectory": "C:/Users/User/village_officer_app/linux"
+  "cSpell.words": ["Abhadhitha", "allprojects", "Sinhala"],
+  "cmake.sourceDirectory": "C:/Users/User/village_officer_app/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
