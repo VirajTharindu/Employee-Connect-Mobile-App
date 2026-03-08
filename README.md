@@ -204,5 +204,5 @@ I would be happy to discuss the architecture, design decisions, or provide a pri
 ---
 
 <p align="center">
-  <em>Built with ❤️ for efficient Employee administration!</em>
+  <em>Built with ❤️ for efficient Employee administration!..</em>
 </p>
