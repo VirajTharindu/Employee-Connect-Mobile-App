@@ -63,9 +63,9 @@ If deeper technical access is required, it can be provided upon request.
 |---------------|---------------|---------------|
 | ![](Screenshots/Family%20Data%20Entry.jpg) | ![](Screenshots/Family%20Data%20List.jpg) | ![](Screenshots/Family%20Aid%20Types.jpg) |
 
-| Aid Details (Samurdhi) | Employment Analytics | Statistics Overview |
-|---------------|---------------|---------------|
-| ![](Screenshots/Family%20Aid%20details%20(Samurdi).jpg) | ![](Screenshots/Job%20Types.jpg) | ![](Screenshots/old.jpg) |
+| Aid Details (Samurdhi) | Employment Analytics |
+|---------------|---------------|
+| ![](Screenshots/Family%20Aid%20details%20(Samurdi).jpg) | ![](Screenshots/Job%20Types.jpg) |
 
 | User Profile View | Data Update Screen | PDF Export Engine |
 |---------------|---------------|---------------|
@@ -204,5 +204,5 @@ I would be happy to discuss the architecture, design decisions, or provide a pri
 ---
 
 <p align="center">
-  <em>Built with ❤️ for efficient Employee administration..</em>
+  <em>Built with ❤️ for efficient Employee administration.</em>
 </p>
