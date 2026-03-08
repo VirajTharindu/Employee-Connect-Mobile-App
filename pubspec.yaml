@@ -1,4 +1,4 @@
-name: village_officer_app
+name: employee_connect
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.4 <3.0.0'
+  sdk: '>=2.19.4 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,7 +34,7 @@ dependencies:
   path: ^1.8.0
   path_provider: ^2.0.11
   share_plus: ^7.2.2
-  file_picker: ^5.3.1
+  file_picker: ^8.1.7
   permission_handler: ^11.0.1
   flutter_archive: ^6.0.3
   intl: ^0.18.0
@@ -70,6 +70,9 @@ dev_dependencies:
     
   
 
+
+  flutter_test:
+    sdk: flutter
 
 flutter_launcher_icons:
   android: "launcher_icon"

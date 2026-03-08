@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:village_officer_app/family_member_form.dart';
+import 'package:employee_connect/presentation/pages/family/family_member_form_page.dart';
 
 void main() {
   testWidgets('FamilyMemberForm smoke test', (WidgetTester tester) async {

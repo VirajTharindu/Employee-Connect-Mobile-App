@@ -1,11 +1,11 @@
 {
-    "name": "village_officer_app",
-    "short_name": "village_officer_app",
+    "name": "Employee Connect",
+    "short_name": "Employee Connect",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Employee and Employee Family Management System Mobile App.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
